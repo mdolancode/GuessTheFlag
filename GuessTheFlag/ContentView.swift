@@ -9,25 +9,62 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        // Types of Gradients
+        // Buttons
+        // 1.
+//        Button("Delete selection") {
+//            print("Now deleting")
+//        }
+        // 2a.
+//        Button("Delete selection", role: .destructive, action: executeDelete)
+//    }
+    // 2b.
+//    func executeDelete() {
+//        print("Now deleting")
+//    }
+        // 3. Using borderProminent on one or two buttons is ok, but no more or you have a problem and nothing is promiment.
+        VStack {
+            Button("Button 1") { }
+                .buttonStyle(.bordered)
+            Button("Button 2", role: .destructive) { }
+                .buttonStyle(.bordered)
+            Button("Button 3") { }
+                .buttonStyle(.borderedProminent)
+                .tint(.mint)
+            Button("Button 4", role: .destructive) { }
+                .buttonStyle(.borderedProminent)
+        }
         
-        // 1. Linear 1
-//        LinearGradient(gradient: Gradient(colors: [.white, .black]), startPoint: .top, endPoint: .bottom)
+        // 4. Custom Button
+//        Button {
+//            print("Button was tapped!")
+//        } label: {
+//            Text("Tap me!")
+//                .padding()
+//                .foregroundColor(.white)
+//                .background(.red)
+//        }
         
-        // 2. Linear 2
-//        LinearGradient(gradient: Gradient(stops: [
-//            .init(color: .white, location: 0.45),
-//            .init(color: .black, location: 0.55)
-//        ]), startPoint: .top, endPoint: .bottom)
+//        // 5. Custom Button with image
+//        Button {
+//            print("Button was tapped!")
+//        } label: {
+//             Image(systemName: "pencil")
+//        }
         
-        // 3. Radial
-        RadialGradient(gradient: Gradient(colors: [.blue, .black]), center: .center, startRadius: 20, endRadius: 200)
-        
-        // 4. Angular
-//        AngularGradient(gradient: Gradient(colors: [.red, .yellow, .green, .blue, .purple, .red]), center: .center)
-        
+        // 6. Custom Button with text & image
+//        Button {
+//            print("Button was tapped!")
+//        } label: {
+//             Label("Edit", systemImage: "pencil")
+//        }
+
+        // Images
+        // 1.
+//        Image(systemName: "pencil")
+        // Will show original graphics and not the color (like blue)
+//            .renderingMode(.original)
+       
     }
-    // **** All gradients can use stops ****
 }
 
 struct ContentView_Previews: PreviewProvider {
