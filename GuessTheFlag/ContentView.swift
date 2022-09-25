@@ -9,24 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            HStack {
-                Text("Hello")
-                Text("Hello")
-                Text("Hello")
+        ZStack {
+            VStack(spacing: 0 ) {
+                Color.red
+                Color.blue
             }
-            HStack {
-                Text("Hello")
-                Text("Hello")
-                Text("Hello")
-            }
-            HStack {
-                Text("Hello")
-                Text("Hello")
-                Text("Hello")
-            }
+            Text("Your content")
+                .foregroundStyle(.secondary)
+                .padding(50)
+                .background(.ultraThinMaterial)
         }
-            
+        .ignoresSafeArea()
     }
 }
 
@@ -35,5 +28,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-// Challenge
-// Place several HStacks together inside a single VStack and make 3 x 3 grid.
