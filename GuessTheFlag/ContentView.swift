@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var questionCounter = 1
     @State private var showingScore = false
+    @State private var showingResults = false
     @State private var scoreTitle = ""
     @State private var score = 0
-    @State private var questionCount = 1
-    @State private var isGameOver = false
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
@@ -58,13 +58,13 @@ struct ContentView: View {
                 Spacer()
                 Spacer()
                 
+                Text("Question: \(questionCounter)/8")
+                    .foregroundColor(.white)
+                    .font(.title3.bold())
+                
                 Text("Score: \(score)")
                     .foregroundColor(.white)
                     .font(.title.bold())
-                
-                Text("Question: \(questionCount)/8")
-                    .foregroundColor(.white)
-                    .font(.title3.bold())
                 
                 Spacer()
             }
@@ -75,21 +75,23 @@ struct ContentView: View {
         } message: {
             Text("Your score is \(score)")
         }
+        .alert("Game Over!", isPresented: $showingResults) {
+            Button("Play Again" , action: newGame)
+        } message : {
+            Text("Your final score is \(score)/8")
+        }
+        
     }
-//        .alert("Game Over!", isPresented: $isGameOver) {
-//        Button("Play Again" , action: reset)
-//    } message : {
-//        Text("Your final score is \(score)/8")
-//    }
-//
+
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
             scoreTitle = "Correct"
             score += 1
         } else {
+            let needsThe = ["UK", "US"]
             let theirAnswer = countries[number]
             
-            if theirAnswer == "UK" || theirAnswer == "US" {
+            if needsThe.contains(theirAnswer) {
                 scoreTitle = "Wrong! That is the flag of the \(theirAnswer)."
             } else {
                 scoreTitle = "Wrong! that is the flag of \(theirAnswer)."
@@ -99,25 +101,25 @@ struct ContentView: View {
                 score -= 1
             }
         }
-        showingScore = true
+        
+        if questionCounter == 8 {
+            showingResults = true
+        } else {
+            showingScore = true
+        }
     }
     
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
-        questionCount += 1
-        print(questionCount)
+        questionCounter += 1
+        print(questionCounter)
     }
     
-    // Use in Alert Button
-    func reset() {
-        if questionCount < 8 {
-            isGameOver = false
-        } else {
-            isGameOver = true
-            questionCount = 1
-            score = 0
-        }
+    func newGame() {
+        questionCounter = 0
+        score = 0
+        askQuestion()
     }
 }
 
