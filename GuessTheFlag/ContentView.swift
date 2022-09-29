@@ -11,6 +11,8 @@ struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
     @State private var score = 0
+    @State private var questionCount = 1
+    @State private var isGameOver = false
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
@@ -20,7 +22,7 @@ struct ContentView: View {
             RadialGradient(stops: [
                 .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
                 .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3)
-                      ], center: .top, startRadius: 200, endRadius: 700)
+            ], center: .top, startRadius: 200, endRadius: 700)
             .ignoresSafeArea()
             VStack {
                 Spacer()
@@ -60,6 +62,10 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .font(.title.bold())
                 
+                Text("Question: \(questionCount)/8")
+                    .foregroundColor(.white)
+                    .font(.title3.bold())
+                
                 Spacer()
             }
             .padding()
@@ -70,7 +76,12 @@ struct ContentView: View {
             Text("Your score is \(score)")
         }
     }
-    
+//        .alert("Game Over!", isPresented: $isGameOver) {
+//        Button("Play Again" , action: reset)
+//    } message : {
+//        Text("Your final score is \(score)/8")
+//    }
+//
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
             scoreTitle = "Correct"
@@ -85,6 +96,19 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        questionCount += 1
+        print(questionCount)
+    }
+    
+    // Use in Alert Button
+    func reset() {
+        if questionCount < 8 {
+            isGameOver = false
+        } else {
+            isGameOver = true
+            questionCount = 1
+            score = 0
+        }
     }
 }
 
