@@ -87,10 +87,16 @@ struct ContentView: View {
             scoreTitle = "Correct"
             score += 1
         } else {
-            scoreTitle = "Wrong, that is the flag of \(countries[number])!"
+            let theirAnswer = countries[number]
+            
+            if theirAnswer == "UK" || theirAnswer == "US" {
+                scoreTitle = "Wrong! That is the flag of the \(theirAnswer)."
+            } else {
+                scoreTitle = "Wrong! that is the flag of \(theirAnswer)."
+            }
             
             if score > 0 {
-                score -= 1 
+                score -= 1
             }
         }
         showingScore = true
